@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour
     private float distanceAttack = 2f;
     private GameObject player;
     private Animator anim;
+    private EnemyStatus status;
 
 
     // Start is called before the first frame update
@@ -15,12 +16,14 @@ public class EnemyAttack : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponentInChildren<Animator>();
+        status = GetComponent<EnemyStatus>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckForPlayerDetection();
+        if (!status.isDead)
+            CheckForPlayerDetection();
     }
 
     private void CheckForPlayerDetection()

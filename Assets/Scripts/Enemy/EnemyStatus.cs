@@ -7,12 +7,15 @@ public class EnemyStatus : MonoBehaviour
 {
     [SerializeField]
     private float maxHealth = 10f;
-    private float currentHealth;
-    private Animator anim;
-    public bool isDead = false;
-    private NavMeshAgent navMeshAgent;
     [SerializeField]
     private Transform respawnPoint;
+
+    private float currentHealth;
+    private Animator anim;
+    private NavMeshAgent navMeshAgent;
+
+    public bool isDead = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +59,7 @@ public class EnemyStatus : MonoBehaviour
         {
             Debug.Log("Enemy hit!");
             TakeDamage(1f);
+            Destroy(other.gameObject);
         }
     }
 }

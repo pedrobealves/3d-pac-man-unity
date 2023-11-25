@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
 {
-    [SerializeField]
-    private int maxHealth = 1;
-    [SerializeField]
-    private int life = 3;
+    [SerializeField] private int maxHealth = 1;
+    [SerializeField] public int maxBullets = 10;
+    [SerializeField] public int maxLife = 3;
+    [SerializeField] public int life;
+    [SerializeField] private Transform respawnPoint;
+
     private int currentHealth;
-    [SerializeField]
-    private Transform respawnPoint;
-
-    private int pills = 0;
-
-    public int maxPills;
+    public int pills = 0;
+    private bool isDead = false;
 
     public int points = 0;
+    public int bullets;
 
-    GameObject[] allPills;
-
-    private bool isDead = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
-        allPills = GameObject.FindGameObjectsWithTag("Pill");
-        maxPills = allPills.Length;
+        life = maxLife;
+        bullets = maxBullets;
     }
 
     public void TakeDamage(int damage)
@@ -38,12 +34,25 @@ public class CharacterStatus : MonoBehaviour
         {
             isDead = true;
             life--;
-            Invoke("Respawn", .8f);
+            Invoke("Respawn", .7f);
+            GameEvents.instance.UpdateLife();
             if (life <= 0)
             {
                 Debug.Log("Game Over!");
             }
         }
+    }
+
+    private void TakeBullet(int number)
+    {
+        bullets += number;
+
+        if (bullets >= maxBullets)
+        {
+            bullets = maxBullets;
+        }
+
+        GameEvents.instance.UpdateBullets();
     }
 
     private void Respawn()
@@ -53,22 +62,14 @@ public class CharacterStatus : MonoBehaviour
         isDead = false;
     }
 
-    private void getPill(GameObject other)
+    private void GetPill()
     {
         pills++;
-        other.SetActive(false);
+        points++;
+
         Debug.Log("Pill collected!");
 
-        if (pills >= maxPills)
-        {
-            Debug.Log("All pills collected!");
-            foreach (GameObject pill in allPills)
-            {
-                Debug.Log("Pill activated!");
-                pill.SetActive(true);
-            }
-            pills = 0;
-        }
+        GameEvents.instance.CheckMaxPills();
 
     }
 
@@ -76,7 +77,14 @@ public class CharacterStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Pill")
         {
-            getPill(other.gameObject);
+            other.gameObject.SetActive(false);
+            GetPill();
+        }
+
+        if (other.gameObject.tag == "Capsule")
+        {
+            TakeBullet(maxBullets);
+            Destroy(other.gameObject);
         }
     }
 }

@@ -10,4 +10,17 @@ public class GameEvents : MonoBehaviour
 
     private void Awake() => instance = this;
 
+    public event Action OnGetPill;
+
+    public void CheckMaxPills() => OnGetPill?.Invoke();
+
+    public event Action OnUpdateBullets;
+
+    public void UpdateBullets() => OnUpdateBullets?.Invoke();
+
+    public event Action OnUpdateLife;
+
+    public void UpdateLife() => OnUpdateLife?.Invoke();
+
+
 }
