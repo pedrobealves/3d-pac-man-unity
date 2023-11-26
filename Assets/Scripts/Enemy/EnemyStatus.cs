@@ -47,6 +47,7 @@ public class EnemyStatus : MonoBehaviour
     {
         transform.position = respawnPoint.position;
         anim.ResetTrigger("Die");
+        anim.Play("CharacterArmature|Idle");
         navMeshAgent.isStopped = false;
         currentHealth = maxHealth;
         isDead = false;

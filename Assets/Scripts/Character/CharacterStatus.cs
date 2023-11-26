@@ -12,8 +12,8 @@ public class CharacterStatus : MonoBehaviour
 
     private int currentHealth;
     public int pills = 0;
-    private bool isDead = false;
 
+    public bool isDead = false;
     public int points = 0;
     public int bullets;
 
@@ -39,6 +39,8 @@ public class CharacterStatus : MonoBehaviour
             if (life <= 0)
             {
                 Debug.Log("Game Over!");
+                GameEvents.instance.GameOver();
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }

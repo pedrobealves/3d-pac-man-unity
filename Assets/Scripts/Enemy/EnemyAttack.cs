@@ -37,9 +37,8 @@ public class EnemyAttack : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                anim.SetTrigger("Attack");
                 hit.collider.GetComponent<CharacterStatus>().TakeDamage(1);
-                Debug.Log("Player attack!");
+                anim.SetTrigger("Attack");
             }
         }
     }

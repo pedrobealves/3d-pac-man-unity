@@ -22,5 +22,8 @@ public class GameEvents : MonoBehaviour
 
     public void UpdateLife() => OnUpdateLife?.Invoke();
 
+    public event Action OnGameOver;
+
+    public void GameOver() => OnGameOver?.Invoke();
 
 }
