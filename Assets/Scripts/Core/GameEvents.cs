@@ -26,4 +26,11 @@ public class GameEvents : MonoBehaviour
 
     public void GameOver() => OnGameOver?.Invoke();
 
+    public event Action OnShoot;
+
+    public void Shoot() => OnShoot?.Invoke();
+
+    public event Action OnGetPowerUp;
+
+    public void GetPowerUp() => OnGetPowerUp?.Invoke();
 }

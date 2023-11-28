@@ -8,22 +8,29 @@ public class FirstPersonAudio : MonoBehaviour
     [Header("Step")]
     public AudioSource stepAudio;
     public AudioSource runningAudio;
+    public AudioSource shootAudio;
+    public AudioSource crystalAudio;
+
+
     [Tooltip("Minimum velocity for moving audio to play")]
     /// <summary> "Minimum velocity for moving audio to play" </summary>
     public float velocityThreshold = .01f;
     Vector2 lastCharacterPosition;
     Vector2 CurrentCharacterPosition => new Vector2(character.transform.position.x, character.transform.position.z);
 
-
     AudioSource[] MovingAudios => new AudioSource[] { stepAudio, runningAudio };
 
+    void OnEnable() => SubscribeToEvents();
+
+    void OnDisable() => UnsubscribeToEvents();
 
     void Reset()
     {
-        // Setup stuff.
         character = GetComponentInParent<FirstPersonMovement>();
         stepAudio = GetOrCreateAudioSource("Step Audio");
         runningAudio = GetOrCreateAudioSource("Running Audio");
+        shootAudio = GetOrCreateAudioSource("Shoot Audio");
+        crystalAudio = GetOrCreateAudioSource("Crystal Audio");
     }
 
     void FixedUpdate()
@@ -70,6 +77,20 @@ public class FirstPersonAudio : MonoBehaviour
         }
     }
 
+    #region Subscribe/unsubscribe to events.
+    void SubscribeToEvents()
+    {
+        GameEvents.instance.OnShoot += () => PlayClip(shootAudio);
+        GameEvents.instance.OnGetPowerUp += () => PlayClip(crystalAudio);
+    }
+
+    void UnsubscribeToEvents()
+    {
+        GameEvents.instance.OnShoot -= () => PlayClip(shootAudio);
+        GameEvents.instance.OnGetPowerUp -= () => PlayClip(crystalAudio);
+    }
+    #endregion
+
     #region Utility.
     /// <summary>
     /// Get an existing AudioSource from a name or create one if it was not found.
@@ -91,6 +112,13 @@ public class FirstPersonAudio : MonoBehaviour
         return result;
     }
 
+    static void PlayClip(AudioSource audio)
+    {
 
+        if (!audio)
+            return;
+
+        audio.Play();
+    }
     #endregion 
 }

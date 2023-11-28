@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8828230829119272301}
   - component: {fileID: 8685725482056993351}
   - component: {fileID: 5559210792298227990}
+  - component: {fileID: 2900534964067737212}
   m_Layer: 0
   m_Name: Pill
   m_TagString: Pill
@@ -76,6 +77,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2900534964067737212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271611418357907295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &3769872296454101387
 PrefabInstance:
   m_ObjectHideFlags: 0

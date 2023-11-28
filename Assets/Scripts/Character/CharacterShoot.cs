@@ -39,6 +39,7 @@ public class CharacterShoot : MonoBehaviour
 
         Destroy(bullet, 2f);
 
+        GameEvents.instance.Shoot();
         GameEvents.instance.UpdateBullets();
     }
 

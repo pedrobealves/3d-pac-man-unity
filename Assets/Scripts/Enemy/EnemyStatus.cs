@@ -16,6 +16,8 @@ public class EnemyStatus : MonoBehaviour
 
     public bool isDead = false;
 
+    private EnemyMovement enemyMovement;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class EnemyStatus : MonoBehaviour
         currentHealth = maxHealth;
         anim = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyMovement = GetComponent<EnemyMovement>();
     }
 
     public void TakeDamage(float damage)
@@ -58,9 +61,10 @@ public class EnemyStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Bullet")
         {
-            Debug.Log("Enemy hit!");
+            enemyMovement.currentState = EnemyMovement.EnemyState.Chase;
             TakeDamage(1f);
             Destroy(other.gameObject);
+            Debug.Log("Enemy hit!");
         }
     }
 }

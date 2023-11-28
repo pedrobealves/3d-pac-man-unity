@@ -28,7 +28,7 @@ public class FirstPersonLook : MonoBehaviour
 
     void Update()
     {
-        if (characterStatus.isDead)
+        if (characterStatus.isGameOver)
             return;
         // Get smooth velocity.
         Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));

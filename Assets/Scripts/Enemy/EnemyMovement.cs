@@ -24,8 +24,8 @@ public class EnemyMovement : MonoBehaviour
     private float idleTimer = 0f;
     private EnemyStatus status;
 
-    private enum EnemyState { Idle, Walk, Chase }
-    private EnemyState currentState = EnemyState.Idle;
+    public enum EnemyState { Idle, Walk, Chase }
+    public EnemyState currentState = EnemyState.Idle;
 
 
     void Start()

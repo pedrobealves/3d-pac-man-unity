@@ -14,6 +14,7 @@ public class CharacterStatus : MonoBehaviour
     public int pills = 0;
 
     public bool isDead = false;
+    public bool isGameOver = false;
     public int points = 0;
     public int bullets;
 
@@ -38,6 +39,7 @@ public class CharacterStatus : MonoBehaviour
             GameEvents.instance.UpdateLife();
             if (life <= 0)
             {
+                isGameOver = true;
                 Debug.Log("Game Over!");
                 GameEvents.instance.GameOver();
                 Cursor.lockState = CursorLockMode.None;
@@ -87,6 +89,7 @@ public class CharacterStatus : MonoBehaviour
         {
             TakeBullet(maxBullets);
             Destroy(other.gameObject);
+            GameEvents.instance.GetPowerUp();
         }
     }
 }
