@@ -11,6 +11,7 @@ public class UIPoint : MonoBehaviour
     void Start()
     {
         GameEvents.instance.OnGetPill += UpdatePoints;
+        UpdatePoints();
     }
 
     // Update is called once per frame

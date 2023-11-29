@@ -5,19 +5,17 @@ using UnityEngine.AI;
 
 public class EnemyStatus : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHealth = 10f;
-    [SerializeField]
-    private Transform respawnPoint;
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private AudioSource dieAudio;
+    [SerializeField] public AudioSource idleAudio;
 
     private float currentHealth;
     private Animator anim;
     private NavMeshAgent navMeshAgent;
-
-    public bool isDead = false;
-
     private EnemyMovement enemyMovement;
 
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +24,13 @@ public class EnemyStatus : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyMovement = GetComponent<EnemyMovement>();
+        idleAudio.Play();
     }
 
     public void TakeDamage(float damage)
     {
+        idleAudio.Stop();
+
         if (isDead)
         {
             return;
@@ -39,6 +40,7 @@ public class EnemyStatus : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            dieAudio.Play();
             isDead = true;
             navMeshAgent.isStopped = true;
             anim.SetTrigger("Die");
@@ -48,6 +50,7 @@ public class EnemyStatus : MonoBehaviour
 
     private void Respawn()
     {
+        idleAudio.Play();
         transform.position = respawnPoint.position;
         anim.ResetTrigger("Die");
         anim.Play("CharacterArmature|Idle");

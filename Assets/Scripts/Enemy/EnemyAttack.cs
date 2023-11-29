@@ -9,6 +9,9 @@ public class EnemyAttack : MonoBehaviour
     private GameObject player;
     private Animator anim;
     private EnemyStatus status;
+    private bool isAttacking = false;
+
+    [SerializeField] private AudioSource attackAudio;
 
 
     // Start is called before the first frame update
@@ -37,8 +40,17 @@ public class EnemyAttack : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                hit.collider.GetComponent<CharacterStatus>().TakeDamage(1);
-                anim.SetTrigger("Attack");
+                if (!isAttacking)
+                {
+                    isAttacking = true;
+                    attackAudio.Play();
+                    hit.collider.GetComponent<CharacterStatus>().TakeDamage(1);
+                    anim.SetTrigger("Attack");
+                }
+            }
+            else
+            {
+                isAttacking = false;
             }
         }
     }
